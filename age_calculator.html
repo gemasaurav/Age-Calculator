@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Age Calculator</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%232E7D6B%22/><text x=%2250%22 y=%2265%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>Y</text></svg>">
+<style>
+  :root{
+    --bg:#F4F6F5;
+    --card:#FFFFFF;
+    --primary:#2E7D6B;
+    --primary-dark:#1F5B4E;
+    --text:#1C1C1A;
+    --muted:#6B6B66;
+    --border:#E3E3DE;
+    --accent-bg:#EAF3F0;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:24px 16px 60px;
+  }
+  .app{
+    width:100%;
+    max-width:420px;
+  }
+  .header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+    padding:0 4px;
+  }
+  .header .logo{
+    width:38px;height:38px;border-radius:10px;
+    background:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+    color:white;font-weight:700;font-size:18px;
+  }
+  .header h1{
+    font-size:20px;
+    font-weight:600;
+    margin:0;
+  }
+  .card{
+    background:var(--card);
+    border-radius:18px;
+    border:1px solid var(--border);
+    padding:22px 20px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom:16px;
+  }
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--muted);
+    margin-bottom:8px;
+    letter-spacing:0.2px;
+  }
+  .date-input{
+    width:100%;
+    height:50px;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    padding:0 14px;
+    font-size:17px;
+    letter-spacing:1px;
+    color:var(--text);
+    background:#FAFAF8;
+    transition:border-color 0.15s;
+    font-variant-numeric:tabular-nums;
+  }
+  .date-input:focus{
+    outline:none;
+    border-color:var(--primary);
+    background:#fff;
+  }
+  .date-input::placeholder{
+    color:#B8B8B2;
+    letter-spacing:1px;
+  }
+  .field{margin-bottom:18px;}
+  .field:last-child{margin-bottom:0;}
+  .toggle-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .switch{
+    position:relative;
+    width:44px;
+    height:26px;
+    flex-shrink:0;
+  }
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{
+    position:absolute;cursor:pointer;inset:0;
+    background:#D6D6D0;
+    border-radius:26px;
+    transition:0.2s;
+  }
+  .slider:before{
+    content:"";
+    position:absolute;
+    height:20px;width:20px;
+    left:3px;top:3px;
+    background:white;
+    border-radius:50%;
+    transition:0.2s;
+    box-shadow:0 1px 2px rgba(0,0,0,0.2);
+  }
+  input:checked + .slider{background:var(--primary);}
+  input:checked + .slider:before{transform:translateX(18px);}
+  .error{
+    color:#B3261E;
+    font-size:12.5px;
+    margin-top:6px;
+    min-height:16px;
+    display:none;
+  }
+  .error.show{display:block;}
+  button.calc{
+    width:100%;
+    height:52px;
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    transition:background 0.15s, transform 0.1s;
+  }
+  button.calc:active{transform:scale(0.98);background:var(--primary-dark);}
+  .result-card{
+    display:none;
+  }
+  .result-card.show{display:block;}
+  .result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .result-box{
+    background:var(--accent-bg);
+    border-radius:14px;
+    padding:16px 6px;
+    text-align:center;
+  }
+  .result-box .num{
+    font-size:26px;
+    font-weight:700;
+    color:var(--primary-dark);
+    line-height:1.1;
+  }
+  .result-box .lbl{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+    font-weight:600;
+  }
+  .total-days{
+    text-align:center;
+    font-size:13px;
+    color:var(--muted);
+    padding-top:10px;
+    border-top:1px solid var(--border);
+  }
+  .total-days b{color:var(--text);}
+  .footer-note{
+    text-align:center;
+    font-size:11.5px;
+    color:#9B9B94;
+    margin-top:20px;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo">Y</div>
+    <h1>Age Calculator</h1>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="fromDate">From (Date of Birth)</label>
+      <input class="date-input" type="text" id="fromDate" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10">
+      <div class="error" id="fromError">Enter a valid date as DD/MM/YYYY</div>
+    </div>
+
+    <div class="field">
+      <div class="toggle-row">
+        <label style="margin-bottom:0;" for="uptoDate">Upto (As on)</label>
+        <label class="switch" aria-label="Use today's date">
+          <input type="checkbox" id="todayToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <input class="date-input" type="text" id="uptoDate" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" disabled>
+      <div class="error" id="uptoError">Enter a valid date as DD/MM/YYYY</div>
+      <div class="error" id="rangeError">"Upto" date must be after the "From" date</div>
+    </div>
+  </div>
+
+  <button class="calc" id="calcBtn">Calculate age</button>
+
+  <div class="card result-card" id="resultCard">
+    <div class="result-grid">
+      <div class="result-box"><div class="num" id="yearsVal">0</div><div class="lbl">Years</div></div>
+      <div class="result-box"><div class="num" id="monthsVal">0</div><div class="lbl">Months</div></div>
+      <div class="result-box"><div class="num" id="daysVal">0</div><div class="lbl">Days</div></div>
+    </div>
+    <div class="total-days">Total: <b id="totalDaysVal">0</b> days lived</div>
+  </div>
+
+  <div class="footer-note">Tip: on your phone, open this page in Chrome and tap "Add to Home screen" to use it like an app.</div>
+</div>
+
+<script>
+const fromInput = document.getElementById('fromDate');
+const uptoInput = document.getElementById('uptoDate');
+const todayToggle = document.getElementById('todayToggle');
+const calcBtn = document.getElementById('calcBtn');
+const resultCard = document.getElementById('resultCard');
+const fromError = document.getElementById('fromError');
+const uptoError = document.getElementById('uptoError');
+const rangeError = document.getElementById('rangeError');
+
+function autoFormat(e){
+  let digits = e.target.value.replace(/\D/g,'').slice(0,8);
+  let out = digits;
+  if(digits.length > 4){
+    out = digits.slice(0,2) + '/' + digits.slice(2,4) + '/' + digits.slice(4);
+  } else if(digits.length > 2){
+    out = digits.slice(0,2) + '/' + digits.slice(2);
+  }
+  e.target.value = out;
+}
+fromInput.addEventListener('input', autoFormat);
+uptoInput.addEventListener('input', autoFormat);
+
+todayToggle.addEventListener('change', () => {
+  uptoInput.disabled = todayToggle.checked;
+  if(todayToggle.checked){
+    uptoInput.value = '';
+    uptoError.classList.remove('show');
+  }
+});
+
+function parseDDMMYYYY(str){
+  const m = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if(!m) return null;
+  const day = parseInt(m[1],10), month = parseInt(m[2],10), year = parseInt(m[3],10);
+  if(month < 1 || month > 12) return null;
+  const d = new Date(year, month-1, day);
+  if(d.getFullYear() !== year || d.getMonth() !== month-1 || d.getDate() !== day) return null;
+  return d;
+}
+
+calcBtn.addEventListener('click', () => {
+  fromError.classList.remove('show');
+  uptoError.classList.remove('show');
+  rangeError.classList.remove('show');
+  resultCard.classList.remove('show');
+
+  const fromDate = parseDDMMYYYY(fromInput.value.trim());
+  if(!fromDate){
+    fromError.classList.add('show');
+    return;
+  }
+
+  let uptoDate;
+  if(todayToggle.checked){
+    const t = new Date();
+    uptoDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  } else {
+    uptoDate = parseDDMMYYYY(uptoInput.value.trim());
+    if(!uptoDate){
+      uptoError.classList.add('show');
+      return;
+    }
+  }
+
+  if(fromDate > uptoDate){
+    rangeError.classList.add('show');
+    return;
+  }
+
+  let years = uptoDate.getFullYear() - fromDate.getFullYear();
+  let months = uptoDate.getMonth() - fromDate.getMonth();
+  let days = uptoDate.getDate() - fromDate.getDate();
+
+  if(days < 0){
+    months -= 1;
+    const prevMonth = new Date(uptoDate.getFullYear(), uptoDate.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+  if(months < 0){
+    years -= 1;
+    months += 12;
+  }
+
+  const totalDays = Math.round((uptoDate - fromDate) / (1000*60*60*24));
+
+  document.getElementById('yearsVal').textContent = years;
+  document.getElementById('monthsVal').textContent = months;
+  document.getElementById('daysVal').textContent = days;
+  document.getElementById('totalDaysVal').textContent = totalDays.toLocaleString();
+
+  resultCard.classList.add('show');
+});
+</script>
+</body>
+</html>
