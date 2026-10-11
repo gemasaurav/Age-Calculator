@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Age Calculator</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%232E7D6B%22/><text x=%2250%22 y=%2265%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>Y</text></svg>">
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%232E7D6B%22/&gt;&lt;text x=%2250%22 y=%2265%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22&gt;Y&lt;/text&gt;&lt;/svg&gt;">
 <style>
   :root{
     --bg:#F4F6F5;
@@ -208,11 +206,11 @@
       <div class="toggle-row">
         <label style="margin-bottom:0;" for="uptoDate">Upto (As on)</label>
         <label class="switch" aria-label="Use today's date">
-          <input type="checkbox" id="todayToggle" checked>
+          <input type="checkbox" id="todayToggle" checked="">
           <span class="slider"></span>
         </label>
       </div>
-      <input class="date-input" type="text" id="uptoDate" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" disabled>
+      <input class="date-input" type="text" id="uptoDate" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" disabled="">
       <div class="error" id="uptoError">Enter a valid date as DD/MM/YYYY</div>
       <div class="error" id="rangeError">"Upto" date must be after the "From" date</div>
     </div>
@@ -229,7 +227,8 @@
     <div class="total-days">Total: <b id="totalDaysVal">0</b> days lived</div>
   </div>
 
-  <div class="footer-note">Tip: on your phone, open this page in Chrome and tap "Add to Home screen" to use it like an app.</div>
+  <div class="footer-note">Designed and Developed by 100, 000 000 000</div>
+
 </div>
 
 <script>
@@ -326,5 +325,6 @@ calcBtn.addEventListener('click', () => {
   resultCard.classList.add('show');
 });
 </script>
-</body>
-</html>
+
+
+</body></html>
